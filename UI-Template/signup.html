@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <title>TA | Login</title>
+</head>
+
+<body>
+    <br>
+    <ul class="navbar navbar-expand-lg bg-body-tertiary"
+        style="padding: 2vh;align-content: center;display: flex;flex-direction: column;">
+        <h1>Teaching Assistant Portal</h1>
+    </ul>
+    <div class="row" style="align-content: center;padding: 2vh;display: flex;flex-direction: column;">
+        <div class="col-sm-8 mb-2 mb-sm-0">
+            <div class="card text-center">
+                <div class="card-header">
+                    Sign Up
+                </div>
+                <form class="row g-1 needs-validation" id="createUserForm" method="post" novalidate>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <div class="mb-3 row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="staticEmail" name="email" value=""
+                                    placeholder="Email ID" required>
+                                <div class="invalid-feedback">
+                                    Please Provide a Email.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputPassword" name="password"
+                                    placeholder="Enter Password" required>
+                                <div class="invalid-feedback">
+                                    Please Enter a Password.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Confirm Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="ConfirmPassword"
+                                    placeholder="Confirm Password" required>
+                                <div class="invalid-feedback">
+                                    Please Confirm Password.
+                                </div>
+                            </div>
+                        </div>
+                        </p>
+                        <button class="btn btn-primary" type="submit">Signup</button>&nbsp;&nbsp;&nbsp;
+                        <a href="login.html" style="text-decoration: none;">Already have account?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+
+    createUserForm.onsubmit = async (e) => {
+        e.preventDefault();
+        var pass1 = document.getElementById('inputPassword').value;
+        var pass2 = document.getElementById('ConfirmPassword').value;
+        if (pass1 != pass2) {
+            alert("Password did not matched")
+        }
+        else if (pass1.length < 8) {
+            alert("Password length must be greater then 8 Charater")
+        }
+        else {
+            let response = await fetch('http://127.0.0.1:5000/signup', {
+                method: 'Post',
+                body: new FormData(createUserForm),
+            });
+            let result = await response.json();
+            if (result["Error"] == "Email Already Exists!!!") {
+                alert("Email Already Exists Please Login!!!");
+                window.location.href = "login.html"
+            } else {
+                alert("User Registered Successfully");
+                // Get Token for new user
+                sessionStorage.clear();
+                let loginResponse = await fetch('http://127.0.0.1:5000/login', {
+                    method: 'POST',
+                    body: new FormData(createUserForm),
+                })
+                let loginResult = await loginResponse.json();
+                if (loginResult == "None" || loginResult['Error'] == 'Incorrect password!!!' || loginResult['Error'] == "INVALID USER") {
+                    alert("wrong username or password");
+                }
+                else {
+                    sessionStorage.setItem("token", "Bearer ".concat(loginResult));
+                    window.location.href = "index.html";
+                }
+            }
+        }
+    };
+</script>
+
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.13/dist/css/uikit.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <title>TA | Home</title>
+</head>
+
+<body onload="onloaddfunc()">
+    <br>
+    <!-- <h1>Ouput Here</h1>
+    <h2 id="output"></h2> -->
+    <ul class="navbar navbar-expand-lg bg-body-tertiary uk-subnav uk-subnav-pill" uk-switcher style="padding: 2vh;">
+        <label>Teaching Assistant</label>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Add</a></li>
+        <li><a href="#">Update</a></li>
+        <li><a href="#">Delete</a></li>
+        <a onclick="logout()">Logout</a>
+    </ul>
+    <br>
+    <ul class="uk-switcher uk-margin">
+        <li>
+            <div class="row" style="align-content: center;padding: 2vh;display: flex;flex-direction: column;">
+                <div class="col-sm-8 mb-2 mb-sm-0">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>HOME</span>
+                            <span style="float: right;"><a onclick="ViewTA()"><i
+                                        class="bi bi-arrow-clockwise">Refresh</i></a></span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">All Teaching Assistants</h5>
+                            <p class="card-text">
+                            <table class="table table-hover" id="viewTA">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#ID</th>
+                                        <th scope="col">Native English Speaker</th>
+                                        <th scope="col">Course Instructor</th>
+                                        <th scope="col">Course</th>
+                                        <th scope="col">Semester</th>
+                                        <th scope="col">Class Size</th>
+                                        <th scope="col">Performance Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyViewTA">
+                                </tbody>
+                            </table>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="row" style="align-content: center;padding: 2vh;display: flex;flex-direction: column;">
+                <div class="col-sm-8 mb-2 mb-sm-0">
+                    <div class="card">
+                        <div class="card-header">
+                            Add
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Adding Teaching Assistants</h5>
+                            <p class="card-text">
+                            <form action="#" method="post" id="add_ta">
+                                <div class="mb-3 row">
+                                    <label for="add_id" class="col-sm-2 col-form-label">Id</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" id="add_id" name="id"
+                                            placeholder="Enter ID Here..." required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_inputnative_english_speaker"
+                                        class="col-sm-2 col-form-label">Native English Speaker</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" id="native_english_speaker"
+                                            name="native_english_speaker" required>
+                                            <option selected disabled>Select</option>
+                                            <option value="true">English speaker</option>
+                                            <option value="false">non-English speaker</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_course_instructor" class="col-sm-2 col-form-label">Course
+                                        Instructor</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" min="1" max="26" class="form-control"
+                                            id="update_course_instructor" name="course_instructor"
+                                            placeholder="Enter Category from 1 to 26" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_Course" class="col-sm-2 col-form-label">Course</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" min="1" max="25" class="form-control" id="update_Course"
+                                            placeholder="Enter Category from 1 to 25" name="course" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_semester" class="col-sm-2 col-form-label">Semester</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" id="semester" name="semester" required>
+                                            <option selected disabled>Select semester</option>
+                                            <option value="true">Summer</option>
+                                            <option value="false">Regular</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_class_size" class="col-sm-2 col-form-label">Class Size</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" id="update_class_size"
+                                            name="class_size" placeholder="Enter Class Size" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_performance_score" class="col-sm-2 col-form-label">Performance
+                                        Score</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" id="performance_score" name="performance_score"
+                                            required>
+                                            <option selected disabled>Select performance score</option>
+                                            <option value="Low">Low</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="High">High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                </p>
+                                <button href="#" class="btn btn-primary">Add TA</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="row" style="align-content: center;padding: 2vh;display: flex;flex-direction: column;">
+                <div class="col-sm-8 mb-2 mb-sm-0">
+                    <div class="card">
+                        <div class="card-header">
+                            Update
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Update Teaching Assistants</h5>
+                            <p class="card-text">
+                            <form action="#" method="post" id="update_ta">
+                                <div class="mb-3 row">
+                                    <label for="update_id" class="col-sm-2 col-form-label">Id</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" id="update_id" required>
+                                            <option selected disabled>Select ID</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_native_english_speaker" class="col-sm-2 col-form-label">Native
+                                        English Speaker</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" id="update_native_english_speaker"
+                                            name="native_english_speaker" required>
+                                            <option selected disabled>Select</option>
+                                            <option value="true">English speaker</option>
+                                            <option value="false">non-English speaker</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_courseinstructor" class="col-sm-2 col-form-label">Course
+                                        Instructor</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" min="1" max="26" class="form-control"
+                                            id="update_courseinstructor" name="course_instructor"
+                                            placeholder="Enter Category from 1 to 26" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_course" class="col-sm-2 col-form-label">Course</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" min="1" max="25" class="form-control" id="update_course"
+                                            name="course" placeholder="Enter Category from 1 to 25" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_semester" class="col-sm-2 col-form-label">Semester</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" id="update_semester" name="semester" required>
+                                            <option selected disabled>Select semester</option>
+                                            <option value="true">Summer</option>
+                                            <option value="false">Regular</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_classsize" class="col-sm-2 col-form-label">Class Size</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" id="update_classsize"
+                                            name="class_size" placeholder="Enter Class Size" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="update_performance_score" class="col-sm-2 col-form-label">Performance
+                                        Score</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" id="update_performance_score"
+                                            name="performance_score" required>
+                                            <option selected disabled>Select performance score</option>
+                                            <option value="Low">Low</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="High">High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                </p>
+                                <button href="#" class="btn btn-primary">Update TA</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="row" style="align-content: center;padding: 2vh;display: flex;flex-direction: column;">
+                <div class="col-sm-8 mb-2 mb-sm-0">
+                    <div class="card">
+                        <div class="card-header">
+                            Delete
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Delete Teaching Assistants</h5>
+                            <p class="card-text">
+                            <form action="" method="post" id="delete_TA">
+                                <div class="mb-3 row">
+                                    <label for="delete_id" class="col-sm-2 col-form-label">Id</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" id="delete_id">
+                                            <option selected>Select ID</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                </p>
+                                <button href="#" class="btn btn-primary">Delete TA</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</body>
+<script>
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", sessionStorage.getItem("token"));
+
+    function onloaddfunc() {
+        verify();
+        ViewTA();
+    }
+
+    async function id_drop_down() {
+        let response = await fetch('http://127.0.0.1:5000/viewAllId', {
+            headers: myHeaders,
+            method: 'GET',
+        })
+        let result = await response.json();
+        updatedropdown = document.getElementById('update_id');
+        deletedropdown = document.getElementById('delete_id');
+        updatedropdown.innerHTML = '';
+        deletedropdown.innerHTML = '';
+        for (let i = 0; i < result.length; i++) {
+            option = document.createElement('option');
+            option.value = result[i];
+            option.innerHTML = result[i];
+            updatedropdown.append(option);
+        }
+        for (let i = 0; i < result.length; i++) {
+            option = document.createElement('option');
+            option.value = result[i];
+            option.innerHTML = result[i];
+            deletedropdown.append(option);
+        }
+    }
+
+    // verifying user is authenticated
+    function verify() {
+        var token = sessionStorage.getItem("token");
+        if (token === null) {
+            window.location.replace("./login.html");
+        }
+    }
+
+    // function to logout which clears the token from session
+    function logout() {
+        a = confirm("You are about to Logout!")
+        if (a) {
+            sessionStorage.clear();
+            window.location.href = 'login.html'
+        }
+    }
+
+    async function ViewTA() {
+        let response = await fetch('http://127.0.0.1:5000/viewAll', {
+            headers: myHeaders
+        });
+        let result = await response.json();
+        let viewTA = document.querySelector('#viewTA');
+        let tbodyViewTA = document.querySelector('#tbodyViewTA');
+        let s = ''
+        if (result.length == 0) {
+            viewTA.innerHTML = 'No Teaching Assist to Show';
+        }
+        else if (result['Error'] == "TOKEN EXPIRED") {
+            alert("Your Session is timeout please re-login")
+            sessionStorage.clear();
+            window.location.href = 'login.html'
+        }
+        else {
+            result.forEach((TA, i) => {
+                var nes, sem;
+                if (TA[1] == true) {
+                    nes = "English speaker";
+                }
+                else {
+                    nes = "non-English speaker"
+                }
+                if (TA[4] == true) {
+                    sem = "Summer"
+                }
+                else {
+                    sem = "Regular"
+                }
+                s += `<tr>
+                        <th scope="row">`+ TA[0] + `</th>
+                        <td>${nes}</td>
+                        <td>`+ TA[2] + `</td>
+                        <td>`+ TA[3] + `</td>
+                        <td>${sem}</td>
+                        <td>`+ TA[5] + `</td>
+                        <td>`+ TA[6] + `</td>
+                    </tr>`
+            });
+            tbodyViewTA.innerHTML = s;
+        }
+        id_drop_down();
+    }
+
+    add_ta.onsubmit = async (e) => {
+        e.preventDefault();
+        let response = await fetch('http://127.0.0.1:5000/add', {
+            headers: myHeaders,
+            method: 'POST',
+            body: new FormData(add_ta),
+        })
+        let result = await response.json();
+        if (result["Failed"] == "Id already exist") {
+            alert("ID Already Exists");
+        }
+        else if (result['Error'] == "TOKEN EXPIRED") {
+            alert("Your Session is timeout please re-login")
+            sessionStorage.clear();
+            window.location.href = 'login.html'
+        }
+        else {
+            add_ta.reset()
+            alert("TA added Successfully");
+        }
+    };
+
+    update_id.onchange = async (e) => {
+        e.preventDefault();
+        ta_id = document.getElementById("update_id").value;
+        let response = await fetch('http://127.0.0.1:5000/viewWithId/' + ta_id, {
+            headers: myHeaders,
+            method: 'GET',
+        })
+        let result = await response.json();
+
+        document.getElementById('update_native_english_speaker').value = result[1].toString();
+        document.getElementById('update_courseinstructor').value = result[2];
+        document.getElementById('update_course').value = result[3];
+        document.getElementById('update_semester').value = result[4].toString();
+        document.getElementById('update_classsize').value = result[5];
+        document.getElementById('update_performance_score').value = result[6];
+
+        if (result['Error'] == "TOKEN EXPIRED") {
+            alert("Your Session is timeout please re-login")
+            sessionStorage.clear();
+            window.location.href = 'login.html'
+        }
+    };
+
+    update_ta.onsubmit = async (e) => {
+        e.preventDefault();
+        ta_id = document.getElementById("update_id").value;
+        let response = await fetch('http://127.0.0.1:5000/update/' + ta_id, {
+            headers: myHeaders,
+            method: 'PUT',
+            body: new FormData(update_ta)
+        })
+        let result = await response.json();
+
+        if (result['Error'] == "TOKEN EXPIRED") {
+            alert("Your Session is timeout please re-login")
+            sessionStorage.clear();
+            window.location.href = 'login.html'
+        }
+        else if (result['Success'] == "TA Updated Successfully") {
+            update_ta.reset()
+            alert('TA Updated Successfully');
+        }
+    };
+
+    delete_TA.onsubmit = async (e) => {
+        e.preventDefault();
+        if (confirm("Are you sure you want to delete?") == true) {
+            ta_id = document.getElementById("delete_id").value;
+            let response = await fetch('http://127.0.0.1:5000/delete/' + ta_id, {
+                headers: myHeaders,
+                method: 'GET'
+            })
+            let result = await response.json();
+
+            if (result['Error'] == "TOKEN EXPIRED") {
+                alert("Your Session is timeout please re-login")
+                sessionStorage.clear();
+                window.location.href = 'login.html'
+            }
+            else if (result['Success'] == "TA Deleted Successfully") {
+                delete_TA.reset()
+                alert('TA Deleted Successfully');
+            }
+            ViewTA();
+        }
+    };
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.16.13/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.16.13/dist/js/uikit-icons.min.js"></script>
+
+</html>
